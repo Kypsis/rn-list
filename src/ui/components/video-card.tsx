@@ -1,14 +1,17 @@
 import React from "react"
+import LinearGradient from "react-native-linear-gradient"
 import { useFocusEffect, useNavigation } from "@react-navigation/native"
-import { StyleSheet, View, Pressable, Dimensions, Image } from "react-native"
+import { StyleSheet, View, Pressable, Dimensions, ImageBackground } from "react-native"
 
+import CardInfo from "./card-info"
+import { radius, spacing } from "../../theme"
 import { VideoModel } from "../../data/models/video.model"
 
 const VideoCard: React.FC<{ cardData: VideoModel }> = ({ cardData }) => {
-  const [opacity, setOpacity] = React.useState(1)
   const navigation = useNavigation()
+  const [opacity, setOpacity] = React.useState(1)
 
-  const { dateTime, fileName, videoUrl, thumbnailUrl } = cardData
+  const { dateTime, fileName, videoUrl, thumbnailUrl, durationInSeconds } = cardData
 
   useFocusEffect(() => {
     if (navigation.isFocused()) {
@@ -25,7 +28,22 @@ const VideoCard: React.FC<{ cardData: VideoModel }> = ({ cardData }) => {
       }}
     >
       <View style={[styles.container, { opacity }]}>
-        <Image source={{ uri: thumbnailUrl }} style={styles.image} />
+        <ImageBackground
+          source={{ uri: thumbnailUrl }}
+          style={styles.image}
+          borderRadius={radius.large}
+        >
+          <LinearGradient
+            colors={["rgba(0,0,0,0)", "rgba(0,0,0,0)", "rgba(0,0,0,0.5)"]}
+            style={styles.gradient}
+          >
+            <CardInfo
+              fileName={fileName}
+              dateTime={dateTime}
+              durationInSeconds={durationInSeconds}
+            />
+          </LinearGradient>
+        </ImageBackground>
       </View>
     </Pressable>
   )
@@ -33,38 +51,22 @@ const VideoCard: React.FC<{ cardData: VideoModel }> = ({ cardData }) => {
 
 export default VideoCard
 
-/* const styles = StyleSheet.create({
-  container: {
-    height: 256.0,
-    backgroundColor: 'white',
-    borderRadius: 12.0,
-  },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    padding: 24.0,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-  },
-  imageStyle: {
-    borderRadius: 12.0,
-  },
-}); */
-
-const margin = 24
-const borderRadius = 12
-const width = Dimensions.get("window").width - margin * 2
+const width = Dimensions.get("window").width - spacing.l * 2
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius,
+    borderRadius: radius.large,
     height: (width * 9) / 16,
-    marginTop: 16,
     width,
   },
+
+  gradient: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+
   image: {
     ...StyleSheet.absoluteFillObject,
-    borderRadius,
     height: undefined,
     resizeMode: "cover",
     width: undefined,

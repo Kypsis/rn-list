@@ -1,32 +1,31 @@
 import React from "react"
 import { StyleSheet, View } from "react-native"
-import Video from "react-native-video"
+import { useNavigation } from "@react-navigation/native"
+
+import VideoPlayerCustom from "../../library_extensions/video_player_controls/video-player"
 import { VideoModel } from "../../data/models/video.model"
+import { color } from "../../theme"
 
 const VideoScreen: React.FC<{
   route: any
   navigation: any
 }> = ({ route }) => {
+  const navigation = useNavigation()
+
   const { videoUrl } = route.params as VideoModel
 
   return (
-    <View style={[StyleSheet.absoluteFill, styles.container]}>
-      <Video
-        source={{
-          uri: videoUrl,
-        }}
-        style={StyleSheet.absoluteFill}
-        resizeMode="cover"
-        repeat
-      />
-    </View>
+    <VideoPlayerCustom
+      repeat
+      disableVolume
+      disableFullscreen
+      tapAnywhereToPause
+      onBack={navigation.goBack}
+      source={{
+        uri: videoUrl,
+      }}
+    />
   )
 }
 
 export default VideoScreen
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#000000",
-  },
-})
