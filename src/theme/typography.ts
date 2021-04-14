@@ -29,21 +29,21 @@ export const H3: TextStyle = {
 
 export const H4: TextStyle = {
   fontFamily: typography.secondary,
-  fontSize: 20,
+  fontSize: 18,
   fontWeight: "700",
   color: palette.white,
 }
 
 export const H5: TextStyle = {
-  fontFamily: typography.primary,
-  fontSize: 16,
-  fontWeight: "600",
-  color: palette.darkGrey,
+  fontFamily: typography.secondary,
+  fontSize: 14,
+  fontWeight: "700",
+  color: palette.white,
 }
 
 export const H6: TextStyle = {
   fontFamily: typography.secondary,
   fontSize: 12,
-  fontWeight: "600",
+  fontWeight: "700",
   color: palette.white,
 }

@@ -5,6 +5,16 @@ export const color = {
   transparent: "rgba(0, 0, 0, 0)",
 
   /**
+   * Accent color.
+   */
+  accent: palette.gold,
+
+  /**
+   * Header color.
+   */
+  header: palette.darkGrey,
+
+  /**
    * The screen background.
    */
   background: palette.black,

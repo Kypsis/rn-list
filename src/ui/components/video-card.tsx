@@ -51,7 +51,7 @@ const VideoCard: React.FC<{ cardData: VideoModel }> = ({ cardData }) => {
 
 export default memo(VideoCard)
 
-const width = Dimensions.get("window").width - spacing.l * 2
+const width = Dimensions.get("window").width - spacing.m * 2
 
 const styles = StyleSheet.create({
   container: {

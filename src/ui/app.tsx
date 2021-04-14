@@ -11,7 +11,7 @@ const Stack = createStackNavigator()
 const App = () => {
   return (
     <NavigationContainer>
-      <StatusBar translucent backgroundColor="transparent" barStyle={"light-content"} />
+      <StatusBar barStyle={"light-content"} backgroundColor="transparent" translucent />
       <Stack.Navigator initialRouteName="VideoList">
         <Stack.Screen
           name="VideoList"
