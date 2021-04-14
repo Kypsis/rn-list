@@ -1,24 +1,44 @@
-import React from "react"
-import { StyleSheet, View } from "react-native"
+import React, { memo, useRef, useEffect, useCallback } from "react"
+import { Animated, Easing, StyleSheet } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
-import { color, radius } from "../../theme"
+import { color, duration, radius } from "../../theme"
 
 const Fab: React.FC<{
   materialCommunityIconsName: string
   callback(): void
-}> = ({ callback, materialCommunityIconsName }) => {
+  isVisible: boolean
+}> = ({ callback, materialCommunityIconsName, isVisible }) => {
+  const animation = useRef(new Animated.Value(0)).current
+
+  const fade = useCallback(
+    (isVisible: boolean): void => {
+      Animated.timing(animation, {
+        toValue: isVisible ? 1 : 0,
+        duration: duration.fast,
+        easing: Easing.inOut(Easing.circle),
+        useNativeDriver: true,
+      }).start()
+    },
+    [isVisible],
+  )
+
+  useEffect(() => {
+    console.log(isVisible)
+    fade(isVisible)
+  }, [isVisible])
+
   return (
-    <View style={styles.fabContainer}>
+    <Animated.View style={{ ...styles.fabContainer, opacity: animation }}>
       <TouchableOpacity onPress={callback} style={styles.fab}>
         <Icon name={materialCommunityIconsName} size={24} color={color.iconPrimary} />
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   )
 }
 
-export default Fab
+export default memo(Fab)
 
 const styles = StyleSheet.create({
   fab: {

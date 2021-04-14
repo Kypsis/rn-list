@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import LinearGradient from "react-native-linear-gradient"
 import { useFocusEffect, useNavigation } from "@react-navigation/native"
 import { StyleSheet, View, Pressable, Dimensions, ImageBackground } from "react-native"
@@ -49,7 +49,7 @@ const VideoCard: React.FC<{ cardData: VideoModel }> = ({ cardData }) => {
   )
 }
 
-export default VideoCard
+export default memo(VideoCard)
 
 const width = Dimensions.get("window").width - spacing.l * 2
 

@@ -22,7 +22,7 @@ export const color = {
   /**
    * Chip background color.
    */
-  chip: withOpacity(palette.black, 0.3),
+  chip: withOpacity(palette.black, 0.35),
 
   /**
    * Primary icon background color.
@@ -33,6 +33,11 @@ export const color = {
    * Secondary icon background color.
    */
   iconSecondary: palette.white,
+
+  /**
+   * Secondary icon background color.
+   */
+  iconTertiary: palette.grey,
 
   /**
    * The main tinting color.

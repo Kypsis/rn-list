@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useRef } from "react"
-import { StyleSheet, View, StatusBar, SectionList, Text } from "react-native"
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  SectionList,
+  Text,
+  Dimensions,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from "react-native"
 
 import Fab from "../components/fab"
 import Separator from "../components/separator"
@@ -11,6 +20,9 @@ const VideoListScreen = () => {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
+  const [isFabVisible, setIsFabVisible] = useState(false)
+
+  const screenHeight = Dimensions.get("window").height
 
   useEffect(() => {
     fetchData()
@@ -37,10 +49,22 @@ const VideoListScreen = () => {
   const scrollToTop = () =>
     listRef.current.scrollToLocation({ animated: true, itemIndex: 0, sectionIndex: 0 })
 
+  const hideFab = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const scrollOffset = event.nativeEvent.contentOffset.y
+
+    if (scrollOffset <= screenHeight) {
+      setIsFabVisible(false)
+    } else {
+      setIsFabVisible(true)
+    }
+  }
+
   return (
     <View style={styles.viewContainer}>
       <SectionList
+        progressViewOffset={(StatusBar.currentHeight ?? 50) + screenHeight / 3}
         refreshing={isLoading}
+        onScroll={hideFab}
         ref={listRef}
         onRefresh={fetchData}
         stickySectionHeadersEnabled
@@ -56,7 +80,11 @@ const VideoListScreen = () => {
         renderItem={({ item }) => <VideoCard cardData={item} />}
       />
 
-      <Fab callback={scrollToTop} materialCommunityIconsName="arrow-collapse-up" />
+      <Fab
+        isVisible={isFabVisible}
+        callback={scrollToTop}
+        materialCommunityIconsName="arrow-collapse-up"
+      />
     </View>
   )
 }
@@ -65,7 +93,6 @@ export default VideoListScreen
 
 const styles = StyleSheet.create({
   contentContainer: {
-    // marginBottom: spacing.l,
     marginHorizontal: spacing.l,
     marginTop: (StatusBar.currentHeight ?? 50) - spacing.l,
   },

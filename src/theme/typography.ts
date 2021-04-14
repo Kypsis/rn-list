@@ -30,7 +30,7 @@ export const H3: TextStyle = {
 export const H4: TextStyle = {
   fontFamily: typography.secondary,
   fontSize: 20,
-  fontWeight: "600",
+  fontWeight: "700",
   color: palette.white,
 }
 
@@ -38,7 +38,7 @@ export const H5: TextStyle = {
   fontFamily: typography.primary,
   fontSize: 16,
   fontWeight: "600",
-  color: palette.offWhite,
+  color: palette.darkGrey,
 }
 
 export const H6: TextStyle = {
