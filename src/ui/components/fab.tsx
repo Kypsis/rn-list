@@ -1,15 +1,32 @@
 import React, { memo, useRef, useEffect, useCallback } from "react"
-import { Animated, Easing, StyleSheet } from "react-native"
-import { TouchableOpacity } from "react-native-gesture-handler"
+import { Animated, Easing, StyleSheet, TouchableOpacity } from "react-native"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { color, duration, radius } from "../../theme"
 
-const Fab: React.FC<{
-  materialCommunityIconsName: string
+interface FabProps {
+  width?: number
+  height?: number
+  iconSize?: number
+  iconColor?: string
+  isVisible?: boolean
+  borderRadius?: number
+  backgroundColor?: string
+  materialCommunityIconsName?: string
   callback(): void
-  isVisible: boolean
-}> = ({ callback, materialCommunityIconsName, isVisible }) => {
+}
+
+const Fab: React.FC<FabProps> = ({
+  width = 40,
+  height = 40,
+  iconSize = 24,
+  iconColor = color.iconPrimary,
+  isVisible = true,
+  borderRadius = radius.huge,
+  backgroundColor = color.buttonSecondary,
+  materialCommunityIconsName = "plus",
+  callback,
+}) => {
   const animation = useRef(new Animated.Value(0)).current
 
   const fade = useCallback(
@@ -25,14 +42,16 @@ const Fab: React.FC<{
   )
 
   useEffect(() => {
-    console.log(isVisible)
     fade(isVisible)
   }, [isVisible])
 
   return (
-    <Animated.View style={{ ...styles.fabContainer, opacity: animation }}>
-      <TouchableOpacity onPress={callback} style={styles.fab}>
-        <Icon name={materialCommunityIconsName} size={24} color={color.iconPrimary} />
+    <Animated.View style={{ opacity: animation }}>
+      <TouchableOpacity
+        onPress={callback}
+        style={{ ...styles.fab, height, width, backgroundColor, borderRadius }}
+      >
+        <Icon name={materialCommunityIconsName} size={iconSize} color={iconColor} />
       </TouchableOpacity>
     </Animated.View>
   )
@@ -43,16 +62,6 @@ export default memo(Fab)
 const styles = StyleSheet.create({
   fab: {
     alignItems: "center",
-    backgroundColor: color.buttonSecondary,
-    borderRadius: radius.huge,
-    height: 48,
     justifyContent: "center",
-    width: 48,
-  },
-
-  fabContainer: {
-    alignSelf: "center",
-    bottom: 16,
-    position: "absolute",
   },
 })

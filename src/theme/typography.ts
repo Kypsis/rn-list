@@ -21,8 +21,8 @@ export const H2: TextStyle = {
 }
 
 export const H3: TextStyle = {
-  fontFamily: typography.primary,
-  fontSize: 24,
+  fontFamily: typography.secondary,
+  fontSize: 22,
   fontWeight: "700",
   color: palette.white,
 }

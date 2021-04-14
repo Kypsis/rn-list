@@ -10,6 +10,11 @@ export const color = {
   accent: palette.gold,
 
   /**
+   * Accent color with opacity.
+   */
+  accentWithOpacity: withOpacity(palette.gold, 0.95),
+
+  /**
    * Header color.
    */
   header: palette.darkGrey,

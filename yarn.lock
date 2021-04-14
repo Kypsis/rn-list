@@ -739,6 +739,13 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@gregfrench/react-native-wheel-picker@^1.2.12":
+  version "1.2.12"
+  resolved "https://registry.yarnpkg.com/@gregfrench/react-native-wheel-picker/-/react-native-wheel-picker-1.2.12.tgz#6722801219a5ead80270cd585a2409c3d8a837da"
+  integrity sha512-AmKDyMsI6h4yO2SSiCDDpz63xNaB/RHS5Db4f9ZLW/+9Gtyq6uy3u07ixKxojYZCtReEYVshR3sxoZf9Z4OBCw==
+  dependencies:
+    "@react-native-picker/picker" "^1.9.4"
+
 "@hapi/hoek@^9.0.0":
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.1.tgz#9daf5745156fd84b8e9889a2dc721f0c58e894aa"
@@ -1118,6 +1125,11 @@
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
+
+"@react-native-picker/picker@^1.9.4":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.15.0.tgz#f571a8b013e001a840db905b21ec18e9d205f01b"
+  integrity sha512-TYdhavldt3ami860fVgYv2mf0d1u5YhMQ6kTw+soX/a1rYbpRCRjdz01sEQXwCW8oL7/lzHakOFnwqCo6JazDw==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
