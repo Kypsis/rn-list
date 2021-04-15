@@ -1,4 +1,4 @@
-import React, { memo, useRef, useEffect, useCallback } from "react"
+import React, { useRef, useEffect, useCallback } from "react"
 import { Animated, Easing, StyleSheet, TouchableOpacity } from "react-native"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
@@ -57,7 +57,7 @@ const Fab: React.FC<FabProps> = ({
   )
 }
 
-export default memo(Fab)
+export default Fab
 
 const styles = StyleSheet.create({
   fab: {

@@ -1,7 +1,7 @@
 export const palette = {
   black: "rgba(0, 0, 0, 1)",
   white: "rgba(255, 255, 255, 1)",
-  gold: "rgba(254, 194, 1, 1)",
+  gold: "rgba(254, 180, 1, 1)",
   offWhite: "rgba(230, 230, 230, 1)",
   lighterGrey: "rgba(205, 212, 218, 1)",
   lightGrey: "rgba(147, 154, 164, 1)",

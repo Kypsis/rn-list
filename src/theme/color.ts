@@ -10,14 +10,9 @@ export const color = {
   accent: palette.gold,
 
   /**
-   * Accent color with opacity.
+   * Action sheet background color.
    */
-  accentWithOpacity: withOpacity(palette.gold, 0.95),
-
-  /**
-   * Header color.
-   */
-  header: palette.darkGrey,
+  actionSheet: palette.darkerGrey,
 
   /**
    * The screen background.
@@ -25,9 +20,9 @@ export const color = {
   background: palette.black,
 
   /**
-   * Secondary button background color.
+   * Primary button background color.
    */
-  buttonPrimary: withOpacity(palette.white, 0.2),
+  buttonPrimary: withOpacity(palette.gold, 0.95),
 
   /**
    * Secondary button background color.
@@ -35,9 +30,19 @@ export const color = {
   buttonSecondary: withOpacity(palette.white, 0.9),
 
   /**
-   * Chip background color.
+   * Primary chip background color.
    */
-  chip: withOpacity(palette.black, 0.35),
+  chipPrimary: withOpacity(palette.black, 0.7),
+
+  /**
+   * Secondary chip background color.
+   */
+  chipSecondary: withOpacity(palette.white, 0.9),
+
+  /**
+   * Tertiary chip background color.
+   */
+  chipTertiary: withOpacity(palette.black, 0.35),
 
   /**
    * Primary icon background color.
@@ -53,16 +58,6 @@ export const color = {
    * Secondary icon background color.
    */
   iconTertiary: palette.grey,
-
-  /**
-   * The main tinting color.
-   */
-  // primary: palette.orange,
-
-  /**
-   * The main tinting color, but darker.
-   */
-  // primaryDarker: palette.orangeDarker,
 
   /**
    * Error messages and icons.

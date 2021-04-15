@@ -1,62 +1,45 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useContext, useRef } from "react"
 import {
   StyleSheet,
   View,
-  Modal,
   StatusBar,
   SectionList,
   Dimensions,
   NativeSyntheticEvent,
   NativeScrollEvent,
   ViewToken,
+  Text,
 } from "react-native"
+import ActionSheet from "react-native-actions-sheet"
 import Picker from "@gregfrench/react-native-wheel-picker"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+import sectionListGetItemLayout from "react-native-section-list-get-item-layout"
 
 import Fab from "../components/fab"
 import Chip from "../components/chip"
 import Separator from "../components/separator"
+import Button from "../components/button"
 import VideoCard from "../components/video-card"
-import { H2, H5, color, spacing, radius } from "../../theme"
-import { VideoModel } from "../../data/models/video.model"
+import { DataModel, VideoModel } from "../../data/models/video.model"
+import { H1, H2, H4, color, spacing, radius } from "../../theme"
+import { VideoDataContext } from "../../data/services/video-data"
 
 const VideoListScreen = () => {
+  const insets = useSafeAreaInsets()
   const listRef = useRef(null)
-  const [data, setData] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
-  const [isFabVisible, setIsFabVisible] = useState(false)
-  const [isPickerVisible, setIsPickerVisible] = useState(false)
-  const [currentDate, setCurrentDate] = useState("")
+  const actionSheetRef = useRef(null)
   const [dateIndex, setDateIndex] = useState(0)
+  const { data, isError, isLoading, fetchData } = useContext(VideoDataContext)
+
+  const [currentDate, setCurrentDate] = useState("")
+  const [isFabVisible, setIsFabVisible] = useState(false)
 
   const screenHeight = Dimensions.get("window").height
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  const fetchData = async () => {
-    setIsError(false)
-    setIsLoading(true)
-
-    try {
-      const response = await fetch(
-        "https://europe-central2-supervaisor-test.cloudfunctions.net/getVideos",
-      )
-      const json = await response.json()
-
-      setData(json)
-    } catch (error) {
-      setIsError(true)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   function updateCurrentDate({ viewableItems }: { viewableItems: Array<ViewToken> }) {
-    if (viewableItems && viewableItems.length) {
+    if (viewableItems?.length) {
       const firstItem = viewableItems[0]
-      if (firstItem && firstItem.section) {
+      if (firstItem?.section) {
         setCurrentDate(firstItem.section.title)
       } else {
         setCurrentDate(null)
@@ -66,11 +49,22 @@ const VideoListScreen = () => {
     }
   }
 
+  const getItemLayout = sectionListGetItemLayout({
+    getItemHeight: () => 220,
+    getSeparatorHeight: () => 16,
+    getSectionHeaderHeight: () => 48 + spacing.m + spacing.xl, // Height + bottom and top margins
+  })
+
   const scrollToTop = () =>
     listRef.current.scrollToLocation({ animated: true, itemIndex: 0, sectionIndex: 0 })
 
-  const scrollToIndex = (index) =>
-    listRef.current.scrollToLocation({ animated: true, itemIndex: 0, sectionIndex: index })
+  const scrollToIndex = (index: number) =>
+    listRef.current.scrollToLocation({
+      animated: true,
+      itemIndex: 0,
+      sectionIndex: index,
+      viewOffset: -16,
+    })
 
   const hideFab = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollOffset = event.nativeEvent.contentOffset.y
@@ -82,36 +76,51 @@ const VideoListScreen = () => {
     }
   }
 
-  return (
+  return !isError ? (
     <View style={styles.viewContainer}>
-      <Modal
-        visible={isPickerVisible}
-        animationType="slide"
-        transparent
-        onRequestClose={() => {
-          setIsPickerVisible(false)
-        }}
+      {currentDate ? (
+        <View style={styles.dateContainer}>
+          <Chip
+            title={currentDate?.toUpperCase()}
+            textStyle={H4}
+            backgroundColor={color.chipPrimary}
+            height={32}
+            borderRadius={radius.medium}
+          />
+        </View>
+      ) : null}
+
+      <ActionSheet
+        ref={actionSheetRef}
+        containerStyle={styles.actionSheet}
+        headerAlwaysVisible
+        gestureEnabled
+        elevation={3}
+        bounceOnOpen
+        springOffset={30}
       >
-        <View style={styles.pickerContainer}>
-          <Picker
-            style={styles.picker}
-            lineColor="#000000" // to set top and bottom line color (Without gradients)
-            selectedValue={data.findIndex((item) => item.title === currentDate)}
-            itemStyle={styles.pickerItem}
-            onValueChange={(index) => setDateIndex(index)}
-          >
-            {data.map((value, i) => (
-              <Picker.Item label={value.title} value={i} key={i} />
-            ))}
-          </Picker>
-          <Fab
+        <Picker
+          style={styles.picker}
+          lineColor={"#FEB401"} // Shows wrong colors if rgba
+          selectedValue={data.findIndex((item: VideoModel) => item.title === currentDate)}
+          itemStyle={styles.pickerItem}
+          onValueChange={(index) => setDateIndex(index)}
+        >
+          {data.map((value: VideoModel, index: number) => (
+            <Picker.Item label={value.title} value={index} key={index} />
+          ))}
+        </Picker>
+        <View style={styles.buttonContainer}>
+          <Button
+            title="GO TO DATE"
+            materialCommunityIconsName="calendar-check"
             callback={() => {
-              setIsPickerVisible(false)
+              actionSheetRef.current?.hide()
               scrollToIndex(dateIndex)
             }}
           />
         </View>
-      </Modal>
+      </ActionSheet>
 
       <SectionList
         ref={listRef}
@@ -119,27 +128,23 @@ const VideoListScreen = () => {
         onScroll={hideFab}
         onRefresh={fetchData}
         refreshing={isLoading}
-        initialScrollIndex={dateIndex}
-        onScrollToIndexFailed={(info) => {
-          const wait = new Promise((resolve) => setTimeout(resolve, 500))
-          wait.then(() => {
-            listRef.current?.scrollToIndex({ index: 0, sectionInde: dateIndex, animated: true })
-          })
-        }}
-        stickySectionHeadersEnabled
         ItemSeparatorComponent={Separator}
+        getItemLayout={getItemLayout as any}
         onViewableItemsChanged={updateCurrentDate}
-        keyExtractor={(item, index) => item + index}
-        contentContainerStyle={styles.contentContainer}
+        keyExtractor={(item: DataModel, index: number) => item.dateTime + index}
+        contentContainerStyle={{
+          ...styles.contentContainer,
+          paddingBottom: insets.bottom + spacing.l,
+        }}
         progressViewOffset={(StatusBar.currentHeight ?? 50) + screenHeight / 3}
         renderItem={({ item }) => <VideoCard cardData={item} />}
         renderSectionHeader={({ section: { title } }) => (
-          <View style={styles.chipContainer}>
+          <View style={styles.headerContainer}>
             <Chip
               title={title.toUpperCase()}
-              textStyle={H5}
-              backgroundColor={color.iconPrimary}
-              height={32}
+              textStyle={H4}
+              backgroundColor={color.transparent}
+              height={48}
               borderRadius={radius.medium}
             />
           </View>
@@ -158,12 +163,16 @@ const VideoListScreen = () => {
         <Fab
           width={56}
           height={56}
-          callback={() => setIsPickerVisible(true)}
+          callback={() => actionSheetRef.current?.show()}
           iconColor={color.iconSecondary}
-          backgroundColor={color.accentWithOpacity}
+          backgroundColor={color.buttonPrimary}
           materialCommunityIconsName="calendar-search"
         />
       </View>
+    </View>
+  ) : (
+    <View style={styles.errorContainer}>
+      <Text style={H1}>Something went wrong</Text>
     </View>
   )
 }
@@ -173,28 +182,50 @@ export default VideoListScreen
 const width = Dimensions.get("window").width - spacing.m * 2
 
 const styles = StyleSheet.create({
-  chipContainer: {
+  actionSheet: {
     alignItems: "center",
-    flex: 1,
-    marginBottom: spacing.l,
-    marginTop: spacing.xl,
+    backgroundColor: color.actionSheet,
+    justifyContent: "center",
+  },
+
+  buttonContainer: {
+    marginBottom: spacing.xl,
+    marginTop: spacing.m,
   },
 
   contentContainer: {
     marginHorizontal: spacing.m,
-    marginTop: (StatusBar.currentHeight ?? 50) - spacing.l,
+    paddingTop: (StatusBar.currentHeight ?? 50) - spacing.xl,
+  },
+
+  dateContainer: {
+    alignItems: "center",
+    elevation: 3,
+    left: 0,
+    position: "absolute",
+    right: 0,
+    top: (StatusBar.currentHeight ?? 50) + spacing.xs,
+    zIndex: 3,
+  },
+
+  errorContainer: {
+    alignItems: "center",
+    backgroundColor: color.background,
+    flex: 1,
+    justifyContent: "center",
+    padding: spacing.xl,
+  },
+
+  headerContainer: {
+    alignItems: "center",
+    marginBottom: spacing.m,
+    marginTop: spacing.xl,
   },
 
   picker: {
-    height: 250,
+    height: 260,
+    marginTop: spacing.s,
     width: width,
-  },
-
-  pickerContainer: {
-    alignItems: "center",
-    backgroundColor: color.accentWithOpacity,
-    flex: 1,
-    justifyContent: "center",
   },
 
   pickerFabContainer: {
@@ -212,5 +243,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
 
-  viewContainer: { backgroundColor: color.background },
+  viewContainer: {
+    backgroundColor: color.background,
+  },
 })

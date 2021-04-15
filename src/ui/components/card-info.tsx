@@ -17,6 +17,7 @@ const CardInfo: React.FC<CardInfoProps> = ({ fileName, dateTime, durationInSecon
     <View style={styles.textContainer}>
       <View style={styles.row}>
         <Chip
+          backgroundColor={color.chipSecondary}
           title={timestampFromDateTime(dateTime)}
           materialCommunityIconsName="clock-time-four-outline"
         />
@@ -25,7 +26,7 @@ const CardInfo: React.FC<CardInfoProps> = ({ fileName, dateTime, durationInSecon
           height={24}
           iconSize={16}
           borderRadius={radius.medium}
-          backgroundColor={color.chip}
+          backgroundColor={color.chipTertiary}
           iconColor={color.iconSecondary}
           materialCommunityIconsName="timer-outline"
           title={timestampFromSeconds(durationInSeconds)}
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   playContainer: {
     alignItems: "center",
     alignSelf: "center",
-    backgroundColor: color.chip,
+    backgroundColor: color.chipTertiary,
     borderRadius: radius.huge,
     height: 48,
     justifyContent: "center",

@@ -1,13 +1,13 @@
 import React, { memo } from "react"
 import LinearGradient from "react-native-linear-gradient"
 import { useFocusEffect, useNavigation } from "@react-navigation/native"
-import { StyleSheet, View, Pressable, Dimensions, ImageBackground } from "react-native"
+import { StyleSheet, View, Pressable, ImageBackground } from "react-native"
 
 import CardInfo from "./card-info"
-import { radius, spacing } from "../../theme"
-import { VideoModel } from "../../data/models/video.model"
+import { radius } from "../../theme"
+import { DataModel } from "../../data/models/video.model"
 
-const VideoCard: React.FC<{ cardData: VideoModel }> = ({ cardData }) => {
+const VideoCard: React.FC<{ cardData: DataModel }> = ({ cardData }) => {
   const navigation = useNavigation()
   const [opacity, setOpacity] = React.useState(1)
 
@@ -51,13 +51,10 @@ const VideoCard: React.FC<{ cardData: VideoModel }> = ({ cardData }) => {
 
 export default memo(VideoCard)
 
-const width = Dimensions.get("window").width - spacing.m * 2
-
 const styles = StyleSheet.create({
   container: {
     borderRadius: radius.large,
-    height: (width * 9) / 16,
-    width,
+    height: 220,
   },
 
   gradient: {

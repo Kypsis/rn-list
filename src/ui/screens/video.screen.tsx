@@ -1,16 +1,15 @@
 import React from "react"
-import { useNavigation } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 
-import { VideoModel } from "../../data/models/video.model"
+import { DataModel } from "../../data/models/video.model"
 import VideoPlayerCustom from "../../library_extensions/video_player_controls/video-player"
 
 const VideoScreen: React.FC<{
-  route: any
-  navigation: any
+  route: RouteProp<{ params: DataModel }, "params">
 }> = ({ route }) => {
   const navigation = useNavigation()
 
-  const { videoUrl } = route.params as VideoModel
+  const { videoUrl } = route.params
 
   return (
     <VideoPlayerCustom

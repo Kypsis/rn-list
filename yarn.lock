@@ -5843,6 +5843,11 @@ react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-actions-sheet@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/react-native-actions-sheet/-/react-native-actions-sheet-0.4.2.tgz#9717f2a72c065db8dadf69577264b8ad32ba91e9"
+  integrity sha512-yeOOggOSAcj7/+U+TwFBhPLi820a1mKAPZcFyOSgJrkQOTpSKw9vnMpqO+ciBH0ngptQq/30CpAH+P+Di3EJ7g==
+
 react-native-codegen@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.6.tgz#b3173faa879cf71bfade8d030f9c4698388f6909"
@@ -5892,6 +5897,11 @@ react-native-screens@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.1.0.tgz#3b516528b54ab8108bf230197fa6e65c7c4a062a"
   integrity sha512-2nCwfminzGfM61Py4PID5hJVV4zGhbYD6TIv16Xj6M0MMNWr9esqIlI94NymY7B12SToXMb5duKU/IR5iBCykg==
+
+react-native-section-list-get-item-layout@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-section-list-get-item-layout/-/react-native-section-list-get-item-layout-2.2.3.tgz#152a8efdcb3847dbcbeb04cd2d0de4312d3d2fcb"
+  integrity sha512-fzCW5SiYP6qCZyDHebaElHonIFr8NFrZK9JDkxFLnpxMJih4d+HQ4rHyOs0Z4Gb/FjyCVbRH7RtEnjeQ0XffMg==
 
 react-native-vector-icons@^8.1.0:
   version "8.1.0"

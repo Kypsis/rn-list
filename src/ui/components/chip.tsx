@@ -1,4 +1,4 @@
-import React, { memo } from "react"
+import React from "react"
 import { StyleProp, StyleSheet, Text, TextStyle, View } from "react-native"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
@@ -23,7 +23,7 @@ const Chip: React.FC<ChipProps> = ({
   height = 32,
   borderRadius = radius.huge,
   materialCommunityIconsName,
-  backgroundColor = color.buttonSecondary,
+  backgroundColor = color.chipPrimary,
 }) => {
   return (
     <View style={{ ...styles.container, backgroundColor, borderRadius, height }}>
@@ -46,7 +46,7 @@ const Chip: React.FC<ChipProps> = ({
   )
 }
 
-export default memo(Chip)
+export default Chip
 
 const styles = StyleSheet.create({
   container: {
