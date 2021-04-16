@@ -7,13 +7,15 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "build-ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
+    "build-android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
   },
   "dependencies": {
     "@gregfrench/react-native-wheel-picker": "^1.2.12",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.9.4",
-    "@react-navigation/stack": "^5.14.4",
+    "@react-navigation/stack": "5.9.3",
     "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-actions-sheet": "^0.4.2",

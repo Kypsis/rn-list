@@ -1,5 +1,10 @@
 export const spacing = {
   /**
+   * 2
+   */
+  xxxs: 2,
+
+  /**
    * 4
    */
   xxs: 4,

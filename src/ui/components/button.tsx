@@ -2,8 +2,7 @@ import React from "react"
 import { Text, StyleSheet, TouchableOpacity, StyleProp, TextStyle } from "react-native"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
-import { H6, color, radius, spacing } from "../../theme"
-import { palette } from "../../theme/palette"
+import { H5, color, radius, spacing } from "../../theme"
 
 interface ButtonProps {
   title?: string
@@ -21,12 +20,12 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({
   title,
   width,
-  height = 48,
+  height,
   iconSize = 24,
-  iconColor = color.iconPrimary,
+  iconColor = color.iconSecondary,
   borderRadius = radius.huge,
   backgroundColor = color.buttonPrimary,
-  materialCommunityIconsName = "plus",
+  materialCommunityIconsName,
   textStyle,
   callback,
 }) => {
@@ -35,14 +34,20 @@ const Button: React.FC<ButtonProps> = ({
       onPress={callback}
       style={{
         ...styles.button,
-        height,
         width,
+        height,
         backgroundColor,
         borderRadius,
-        paddingHorizontal: spacing.l,
       }}
     >
-      <Icon name={materialCommunityIconsName} size={iconSize} color={iconColor} />
+      {materialCommunityIconsName && (
+        <Icon
+          name={materialCommunityIconsName}
+          size={iconSize}
+          color={iconColor}
+          style={styles.icon}
+        />
+      )}
       {title && <Text style={textStyle ?? styles.title}>{title}</Text>}
     </TouchableOpacity>
   )
@@ -55,11 +60,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "center",
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.m,
   },
+
+  icon: {
+    marginRight: spacing.xs,
+  },
+
   title: {
-    ...H6,
-    color: palette.darkerGrey,
+    ...H5,
     marginBottom: 1,
-    marginLeft: spacing.xs,
   },
 })

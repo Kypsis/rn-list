@@ -2,11 +2,12 @@ import React, { useRef, useEffect, useCallback } from "react"
 import { Animated, Easing, StyleSheet, TouchableOpacity } from "react-native"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
-import { color, duration, radius } from "../../theme"
+import { color, duration, radius, spacing } from "../../theme"
 
 interface FabProps {
   width?: number
   height?: number
+  margin?: number
   iconSize?: number
   iconColor?: string
   isVisible?: boolean
@@ -17,8 +18,9 @@ interface FabProps {
 }
 
 const Fab: React.FC<FabProps> = ({
-  width = 40,
-  height = 40,
+  width,
+  height,
+  margin = spacing.m,
   iconSize = 24,
   iconColor = color.iconPrimary,
   isVisible = true,
@@ -51,7 +53,12 @@ const Fab: React.FC<FabProps> = ({
         onPress={callback}
         style={{ ...styles.fab, height, width, backgroundColor, borderRadius }}
       >
-        <Icon name={materialCommunityIconsName} size={iconSize} color={iconColor} />
+        <Icon
+          name={materialCommunityIconsName}
+          size={iconSize}
+          color={iconColor}
+          style={{ margin }}
+        />
       </TouchableOpacity>
     </Animated.View>
   )

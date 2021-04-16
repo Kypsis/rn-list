@@ -1,6 +1,6 @@
 import React from "react"
 import { StatusBar } from "react-native"
-import { NavigationContainer } from "@react-navigation/native"
+import { NavigationContainer, DarkTheme } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 
 import VideoScreen from "./screens/video.screen"
@@ -12,7 +12,16 @@ const Stack = createStackNavigator()
 const App = () => {
   return (
     <VideoDataProvider>
-      <NavigationContainer>
+      <NavigationContainer
+        theme={{
+          dark: false,
+          colors: {
+            ...DarkTheme.colors,
+            background: "#000",
+            card: "#000",
+          },
+        }}
+      >
         <StatusBar barStyle={"light-content"} backgroundColor="transparent" translucent />
         <Stack.Navigator initialRouteName="VideoList">
           <Stack.Screen

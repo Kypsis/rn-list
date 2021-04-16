@@ -25,12 +25,14 @@ const CardInfo: React.FC<CardInfoProps> = ({ fileName, dateTime, durationInSecon
         <Chip
           height={24}
           iconSize={16}
+          paddingVertical={0}
           borderRadius={radius.medium}
-          backgroundColor={color.chipTertiary}
           iconColor={color.iconSecondary}
+          paddingHorizontal={spacing.xxs}
+          backgroundColor={color.chipTertiary}
           materialCommunityIconsName="timer-outline"
           title={timestampFromSeconds(durationInSeconds)}
-          textStyle={{ ...H6, marginHorizontal: spacing.xxs }}
+          textStyle={{ ...H6, marginLeft: spacing.xxs, marginRight: spacing.xxs }}
         />
       </View>
 

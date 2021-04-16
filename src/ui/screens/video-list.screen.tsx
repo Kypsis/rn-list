@@ -58,13 +58,15 @@ const VideoListScreen = () => {
   const scrollToTop = () =>
     listRef.current.scrollToLocation({ animated: true, itemIndex: 0, sectionIndex: 0 })
 
-  const scrollToIndex = (index: number) =>
+  const scrollToIndex = (index: number) => {
     listRef.current.scrollToLocation({
-      animated: true,
       itemIndex: 0,
+      animated: true,
+      viewOffset: Math.abs(dateIndex) + Math.abs(index) > 3 ? -16 : 0,
       sectionIndex: index,
-      viewOffset: -16,
     })
+    listRef.current.recordInteraction()
+  }
 
   const hideFab = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollOffset = event.nativeEvent.contentOffset.y
@@ -82,29 +84,29 @@ const VideoListScreen = () => {
         <View style={styles.dateContainer}>
           <Chip
             title={currentDate?.toUpperCase()}
-            textStyle={H4}
-            backgroundColor={color.chipPrimary}
             height={32}
+            textStyle={H4}
             borderRadius={radius.medium}
+            backgroundColor={color.chipPrimary}
           />
         </View>
       ) : null}
 
       <ActionSheet
+        bounceOnOpen
+        elevation={3}
+        gestureEnabled
+        springOffset={30}
+        headerAlwaysVisible
         ref={actionSheetRef}
         containerStyle={styles.actionSheet}
-        headerAlwaysVisible
-        gestureEnabled
-        elevation={3}
-        bounceOnOpen
-        springOffset={30}
       >
         <Picker
           style={styles.picker}
           lineColor={"#FEB401"} // Shows wrong colors if rgba
-          selectedValue={data.findIndex((item: VideoModel) => item.title === currentDate)}
           itemStyle={styles.pickerItem}
           onValueChange={(index) => setDateIndex(index)}
+          selectedValue={data.findIndex((item: VideoModel) => item.title === currentDate)}
         >
           {data.map((value: VideoModel, index: number) => (
             <Picker.Item label={value.title} value={index} key={index} />
@@ -112,8 +114,7 @@ const VideoListScreen = () => {
         </Picker>
         <View style={styles.buttonContainer}>
           <Button
-            title="GO TO DATE"
-            materialCommunityIconsName="calendar-check"
+            title="Select date"
             callback={() => {
               actionSheetRef.current?.hide()
               scrollToIndex(dateIndex)
@@ -142,10 +143,10 @@ const VideoListScreen = () => {
           <View style={styles.headerContainer}>
             <Chip
               title={title.toUpperCase()}
-              textStyle={H4}
-              backgroundColor={color.transparent}
               height={48}
+              textStyle={H4}
               borderRadius={radius.medium}
+              backgroundColor={color.transparent}
             />
           </View>
         )}
@@ -153,6 +154,7 @@ const VideoListScreen = () => {
 
       <View style={styles.scrollFabContainer}>
         <Fab
+          margin={spacing.xs}
           callback={scrollToTop}
           isVisible={isFabVisible}
           materialCommunityIconsName="arrow-collapse-up"
@@ -161,8 +163,6 @@ const VideoListScreen = () => {
 
       <View style={styles.pickerFabContainer}>
         <Fab
-          width={56}
-          height={56}
           callback={() => actionSheetRef.current?.show()}
           iconColor={color.iconSecondary}
           backgroundColor={color.buttonPrimary}
