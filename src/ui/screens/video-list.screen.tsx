@@ -28,6 +28,7 @@ const VideoListScreen = () => {
   const insets = useSafeAreaInsets()
   const listRef = useRef(null)
   const actionSheetRef = useRef(null)
+  const [prevIndex, setPrevIndex] = useState(0)
   const [dateIndex, setDateIndex] = useState(0)
   const { data, isError, isLoading, fetchData } = useContext(VideoDataContext)
 
@@ -39,7 +40,10 @@ const VideoListScreen = () => {
   function updateCurrentDate({ viewableItems }: { viewableItems: Array<ViewToken> }) {
     if (viewableItems?.length) {
       const firstItem = viewableItems[0]
+      const titleIndex = data.findIndex((item) => item.title === firstItem.section.title)
       if (firstItem?.section) {
+        setPrevIndex(titleIndex)
+        setDateIndex(titleIndex)
         setCurrentDate(firstItem.section.title)
       } else {
         setCurrentDate(null)
@@ -62,7 +66,7 @@ const VideoListScreen = () => {
     listRef.current.scrollToLocation({
       itemIndex: 0,
       animated: true,
-      viewOffset: Math.abs(dateIndex) + Math.abs(index) > 1 ? -16 : 0,
+      viewOffset: Math.abs(prevIndex - index) > 0 ? -16 : 0,
       sectionIndex: index,
     })
     listRef.current.recordInteraction()
@@ -105,8 +109,8 @@ const VideoListScreen = () => {
           style={styles.picker}
           lineColor={"#FEB401"} // Shows wrong colors if rgba
           itemStyle={styles.pickerItem}
-          onValueChange={(index) => setDateIndex(index)}
-          selectedValue={data.findIndex((item: VideoModel) => item.title === currentDate)}
+          onValueChange={setDateIndex}
+          selectedValue={dateIndex}
         >
           {data.map((value: VideoModel, index: number) => (
             <Picker.Item label={value.title} value={index} key={index} />
