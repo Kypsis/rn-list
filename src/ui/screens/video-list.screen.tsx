@@ -62,7 +62,7 @@ const VideoListScreen = () => {
     listRef.current.scrollToLocation({
       itemIndex: 0,
       animated: true,
-      viewOffset: Math.abs(dateIndex) + Math.abs(index) > 3 ? -16 : 0,
+      viewOffset: Math.abs(dateIndex) + Math.abs(index) > 1 ? -16 : 0,
       sectionIndex: index,
     })
     listRef.current.recordInteraction()
@@ -130,6 +130,7 @@ const VideoListScreen = () => {
         onRefresh={fetchData}
         refreshing={isLoading}
         ItemSeparatorComponent={Separator}
+        stickySectionHeadersEnabled={false}
         getItemLayout={getItemLayout as any}
         onViewableItemsChanged={updateCurrentDate}
         keyExtractor={(item: DataModel, index: number) => item.dateTime + index}

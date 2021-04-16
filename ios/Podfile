@@ -12,7 +12,6 @@ target 'mobile' do
     :hermes_enabled => true
   )
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
