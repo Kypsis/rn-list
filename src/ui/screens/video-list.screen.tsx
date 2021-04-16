@@ -17,7 +17,6 @@ import sectionListGetItemLayout from "react-native-section-list-get-item-layout"
 
 import Fab from "../components/fab"
 import Chip from "../components/chip"
-import Separator from "../components/separator"
 import Button from "../components/button"
 import VideoCard from "../components/video-card"
 import { DataModel, VideoModel } from "../../data/models/video.model"
@@ -28,7 +27,6 @@ const VideoListScreen = () => {
   const insets = useSafeAreaInsets()
   const listRef = useRef(null)
   const actionSheetRef = useRef(null)
-  const [prevIndex, setPrevIndex] = useState(0)
   const [dateIndex, setDateIndex] = useState(0)
   const { data, isError, isLoading, fetchData } = useContext(VideoDataContext)
 
@@ -42,7 +40,6 @@ const VideoListScreen = () => {
       const firstItem = viewableItems[0]
       const titleIndex = data.findIndex((item) => item.title === firstItem.section.title)
       if (firstItem?.section) {
-        setPrevIndex(titleIndex)
         setDateIndex(titleIndex)
         setCurrentDate(firstItem.section.title)
       } else {
@@ -54,9 +51,8 @@ const VideoListScreen = () => {
   }
 
   const getItemLayout = sectionListGetItemLayout({
-    getItemHeight: () => 220,
-    getSeparatorHeight: () => 16,
-    getSectionHeaderHeight: () => 48 + spacing.m + spacing.xl, // Height + bottom and top margins
+    getItemHeight: () => 236,
+    getSectionHeaderHeight: () => 48 + spacing.m * 2, // Height + bottom and top margins
   })
 
   const scrollToTop = () =>
@@ -66,7 +62,7 @@ const VideoListScreen = () => {
     listRef.current.scrollToLocation({
       itemIndex: 0,
       animated: true,
-      viewOffset: Math.abs(prevIndex - index) > 0 ? -16 : 0,
+      viewOffset: 0,
       sectionIndex: index,
     })
     listRef.current.recordInteraction()
@@ -134,7 +130,6 @@ const VideoListScreen = () => {
         onScroll={hideFab}
         onRefresh={fetchData}
         refreshing={isLoading}
-        ItemSeparatorComponent={Separator}
         stickySectionHeadersEnabled={false}
         getItemLayout={getItemLayout as any}
         onViewableItemsChanged={updateCurrentDate}
@@ -202,7 +197,7 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     marginHorizontal: spacing.m,
-    paddingTop: (StatusBar.currentHeight ?? 50) - spacing.xl,
+    paddingTop: (StatusBar.currentHeight ?? 50) - spacing.m,
   },
 
   dateContainer: {
@@ -225,8 +220,7 @@ const styles = StyleSheet.create({
 
   headerContainer: {
     alignItems: "center",
-    marginBottom: spacing.m,
-    marginTop: spacing.xl,
+    marginVertical: spacing.m,
   },
 
   picker: {

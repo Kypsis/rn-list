@@ -4,7 +4,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native"
 import { StyleSheet, View, Pressable, ImageBackground } from "react-native"
 
 import CardInfo from "./card-info"
-import { radius } from "../../theme"
+import { radius, spacing } from "../../theme"
 import { DataModel } from "../../data/models/video.model"
 
 const VideoCard: React.FC<{ cardData: DataModel }> = ({ cardData }) => {
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: radius.large,
     height: 220,
+    marginBottom: spacing.m,
   },
 
   gradient: {
