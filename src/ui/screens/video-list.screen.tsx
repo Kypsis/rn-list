@@ -90,6 +90,7 @@ const VideoListScreen = () => {
             title={currentDate?.toUpperCase()}
             height={32}
             textStyle={H4}
+            paddingVertical={0}
             borderRadius={radius.medium}
             backgroundColor={color.chipPrimary}
           />
@@ -150,6 +151,7 @@ const VideoListScreen = () => {
               title={title.toUpperCase()}
               height={48}
               textStyle={H4}
+              paddingVertical={0}
               borderRadius={radius.medium}
               backgroundColor={color.transparent}
             />
