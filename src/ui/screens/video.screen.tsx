@@ -11,15 +11,15 @@ const VideoScreen: React.FC<{
 
   const { videoUrl, thumbnailUrl } = route.params
 
-  console.log(thumbnailUrl)
-
   return (
     <VideoPlayerCustom
       poster={thumbnailUrl}
       repeat
       disableVolume
+      hideShutterView
       disableFullscreen
       tapAnywhereToPause
+      controlTimeout={5000}
       onBack={navigation.goBack}
       source={{
         uri: videoUrl,
