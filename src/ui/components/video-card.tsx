@@ -24,7 +24,7 @@ const VideoCard: React.FC<{ cardData: DataModel }> = ({ cardData }) => {
       style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
       onPress={() => {
         setOpacity(0)
-        navigation.navigate("Video", { dateTime, fileName, videoUrl })
+        navigation.navigate("Video", { dateTime, fileName, videoUrl, thumbnailUrl })
       }}
     >
       <View style={[styles.container, { opacity }]}>

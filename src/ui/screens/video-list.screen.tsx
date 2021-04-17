@@ -87,6 +87,7 @@ const VideoListScreen = () => {
             height={32}
             textStyle={H4}
             paddingVertical={0}
+            paddingHorizontal={spacing.xs}
             borderRadius={radius.medium}
             backgroundColor={color.chipPrimary}
           />
@@ -104,7 +105,7 @@ const VideoListScreen = () => {
       >
         <Picker
           style={styles.picker}
-          lineColor={"#FEB401"} // Shows wrong colors if rgba
+          lineColor={"#fe9b01"} // Shows wrong colors if rgba
           itemStyle={styles.pickerItem}
           onValueChange={setDateIndex}
           selectedValue={dateIndex}
@@ -115,6 +116,7 @@ const VideoListScreen = () => {
         </Picker>
         <View style={styles.buttonContainer}>
           <Button
+            width={240}
             title="Select date"
             callback={() => {
               actionSheetRef.current?.hide()
@@ -188,11 +190,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: color.actionSheet,
     justifyContent: "center",
+    paddingTop: spacing.xxs,
   },
 
   buttonContainer: {
     marginBottom: spacing.xl,
-    marginTop: spacing.m,
+    marginTop: spacing.l,
   },
 
   contentContainer: {
@@ -225,7 +228,7 @@ const styles = StyleSheet.create({
 
   picker: {
     height: 260,
-    marginTop: spacing.s,
+    marginTop: spacing.m,
     width: width,
   },
 

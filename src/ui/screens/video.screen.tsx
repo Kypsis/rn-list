@@ -9,10 +9,13 @@ const VideoScreen: React.FC<{
 }> = ({ route }) => {
   const navigation = useNavigation()
 
-  const { videoUrl } = route.params
+  const { videoUrl, thumbnailUrl } = route.params
+
+  console.log(thumbnailUrl)
 
   return (
     <VideoPlayerCustom
+      poster={thumbnailUrl}
       repeat
       disableVolume
       disableFullscreen

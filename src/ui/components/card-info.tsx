@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
 import Chip from "./chip"
+import TimeChip from "./time-chip"
 import { radius, spacing, color, H3, H6 } from "../../theme"
 import { timestampFromDateTime, timestampFromSeconds } from "../../utils"
 
@@ -13,14 +14,14 @@ interface CardInfoProps {
 }
 
 const CardInfo: React.FC<CardInfoProps> = ({ fileName, dateTime, durationInSeconds }) => {
+  const time = timestampFromDateTime(dateTime)
+  const timeWithoutSeconds = time.replace(/:[^:]*$/, "")
+  const seconds = time.split(":").pop()
+
   return (
     <View style={styles.textContainer}>
       <View style={styles.row}>
-        <Chip
-          backgroundColor={color.chipSecondary}
-          title={timestampFromDateTime(dateTime)}
-          materialCommunityIconsName="clock-time-four-outline"
-        />
+        <TimeChip title={timeWithoutSeconds} trailingText={seconds} />
 
         <Chip
           height={24}
