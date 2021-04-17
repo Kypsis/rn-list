@@ -2,10 +2,15 @@ import React, { memo } from "react"
 import { StyleSheet, Text, View } from "react-native"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
+import {
+  timestampFromDateTime,
+  timestampFromSeconds,
+  timeWithoutSeconds,
+  getSecondsFromTime,
+} from "../../utils"
 import Chip from "./chip"
 import TimeChip from "./time-chip"
 import { radius, spacing, color, H3, H6 } from "../../theme"
-import { timestampFromDateTime, timestampFromSeconds } from "../../utils"
 
 interface CardInfoProps {
   fileName: string
@@ -15,13 +20,13 @@ interface CardInfoProps {
 
 const CardInfo: React.FC<CardInfoProps> = ({ fileName, dateTime, durationInSeconds }) => {
   const time = timestampFromDateTime(dateTime)
-  const timeWithoutSeconds = time.replace(/:[^:]*$/, "")
-  const seconds = time.split(":").pop()
+  const hoursAndMinutes = timeWithoutSeconds(time)
+  const seconds = getSecondsFromTime(time)
 
   return (
     <View style={styles.textContainer}>
       <View style={styles.row}>
-        <TimeChip title={timeWithoutSeconds} trailingText={seconds} />
+        <TimeChip title={hoursAndMinutes} trailingText={seconds} />
 
         <Chip
           height={24}

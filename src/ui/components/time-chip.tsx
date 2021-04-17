@@ -1,5 +1,5 @@
 import React, { memo } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, Platform } from "react-native"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
 import { H5, color, radius, spacing, palette } from "../../theme"
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   title: {
     ...H5,
     color: palette.darkGrey,
-    marginBottom: 1,
     marginHorizontal: spacing.xxs,
   },
 
@@ -62,6 +61,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: "700",
     marginLeft: -1.5,
-    marginTop: 4.4,
+    marginTop: Platform.OS === "ios" ? 3 : 4.4,
   },
 })

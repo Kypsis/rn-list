@@ -8,3 +8,7 @@ export const timestampFromSeconds = function (seconds: number): string {
 
 export const timestampFromDateTime = (dateTime: string): string =>
   new Date(Date.parse(dateTime)).toLocaleTimeString()
+
+export const timeWithoutSeconds = (time: string) => time.replace(/:[^:]*$/, "")
+
+export const getSecondsFromTime = (time: string) => time.split(":").pop()

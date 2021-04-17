@@ -13,12 +13,12 @@ const VideoScreen: React.FC<{
 
   return (
     <VideoPlayerCustom
-      poster={thumbnailUrl}
       repeat
       disableVolume
       hideShutterView
       disableFullscreen
       tapAnywhereToPause
+      poster={thumbnailUrl}
       controlTimeout={5000}
       onBack={navigation.goBack}
       source={{
