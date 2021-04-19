@@ -166,12 +166,14 @@ const VideoListScreen = () => {
       </View>
 
       <View style={styles.pickerFabContainer}>
-        <Fab
-          callback={() => actionSheetRef.current?.show()}
-          iconColor={color.iconSecondary}
-          backgroundColor={color.buttonPrimary}
-          materialCommunityIconsName="calendar-search"
-        />
+        {data && (
+          <Fab
+            callback={() => actionSheetRef.current?.show()}
+            iconColor={color.iconSecondary}
+            backgroundColor={color.buttonPrimary}
+            materialCommunityIconsName="calendar-search"
+          />
+        )}
       </View>
     </View>
   ) : (
@@ -249,5 +251,6 @@ const styles = StyleSheet.create({
 
   viewContainer: {
     backgroundColor: color.background,
+    flex: 1,
   },
 })
